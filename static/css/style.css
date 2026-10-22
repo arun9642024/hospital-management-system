@@ -1,0 +1,12 @@
+:root { --navy: #17324d; --page: #f4f7fb; }
+body { background: var(--page); color: #1e293b; min-height: 100vh; }
+.app-navbar { background: var(--navy); }
+.navbar .nav-link { padding-left: .25rem; padding-right: .25rem; }
+.card { border: 1px solid #e3eaf2; border-radius: 14px; box-shadow: 0 3px 12px rgba(23, 50, 77, .035); }
+.metric-card { height: 100%; background: #fff; border: 1px solid #e3eaf2; border-radius: 14px; padding: 1.15rem; }
+.metric-card span { display: block; color: #64748b; font-size: .88rem; margin-bottom: .45rem; }
+.metric-card strong { display: block; font-size: 1.8rem; color: var(--navy); }
+.chart-img { width: 100%; height: auto; display: block; }
+.login-area { min-height: 60vh; }
+.table { vertical-align: middle; }
+footer { text-align: center; }

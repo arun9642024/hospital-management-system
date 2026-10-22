@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Add visit · Hospital Analytics{% endblock %}
+{% block content %}
+<div class="row justify-content-center"><div class="col-lg-7"><div class="card"><div class="card-body p-4">
+<h1 class="h3 mb-3">Add synthetic visit</h1>
+{% if not patients %}<div class="alert alert-info">Add a patient before creating a visit.</div>{% endif %}
+<form method="post">
+<div class="mb-3"><label class="form-label" for="patient_id">Patient</label><select class="form-select" id="patient_id" name="patient_id" required><option value="">Select patient</option>{% for p in patients %}<option value="{{ p.patient_id }}">P{{ "%04d"|format(p.patient_id) }} · Age {{ p.age_band }}</option>{% endfor %}</select></div>
+<div class="mb-3"><label class="form-label" for="department_id">Department</label><select class="form-select" id="department_id" name="department_id" required><option value="">Select department</option>{% for d in departments %}<option value="{{ d.department_id }}">{{ d.department_name }}</option>{% endfor %}</select></div>
+<div class="mb-3"><label class="form-label" for="visit_date">Visit date</label><input class="form-control" type="date" id="visit_date" name="visit_date" max="{{ today }}" required></div>
+<div class="mb-3"><label class="form-label" for="visit_type">Visit type</label><select class="form-select" id="visit_type" name="visit_type" required>{% for t in ['Routine','Follow-up','Emergency','Other'] %}<option value="{{ t }}">{{ t }}</option>{% endfor %}</select></div>
+<button class="btn btn-primary" {% if not patients %}disabled{% endif %}>Save visit</button> <a class="btn btn-outline-secondary" href="{{ url_for('visits') }}">Cancel</a>
+</form></div></div></div></div>
+{% endblock %}

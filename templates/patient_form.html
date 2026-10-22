@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Add patient · Hospital Analytics{% endblock %}
+{% block content %}
+<div class="row justify-content-center"><div class="col-lg-6"><div class="card"><div class="card-body p-4">
+<h1 class="h3 mb-3">Add synthetic patient</h1>
+<form method="post">
+<div class="mb-3"><label class="form-label" for="age_band">Age band</label><select class="form-select" name="age_band" id="age_band" required><option value="">Select age band</option>{% for band in ['0-17','18-29','30-44','45-59','60+'] %}<option value="{{ band }}">{{ band }}</option>{% endfor %}</select></div>
+<div class="mb-3"><label class="form-label" for="gender_optional">Gender (optional)</label><select class="form-select" name="gender_optional" id="gender_optional"><option value="">Not provided</option>{% for g in ['Female','Male','Other','Prefer not to say'] %}<option value="{{ g }}">{{ g }}</option>{% endfor %}</select></div>
+<button class="btn btn-primary">Save record</button> <a class="btn btn-outline-secondary" href="{{ url_for('patients') }}">Cancel</a>
+</form></div></div></div></div>
+{% endblock %}

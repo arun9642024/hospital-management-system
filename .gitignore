@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+.venv/
+venv/
+env/
+
+# Secrets and local configuration
+.env
+instance/
+*.log
+
+# Generated files
+*.png
+*.csv
+.DS_Store
+Thumbs.db

@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+{% block title %}Application error{% endblock %}
+{% block content %}
+<div class="card card-body"><h1 class="h3">Something went wrong</h1><p>{{ message }}</p><a href="{{ url_for('dashboard') }}" class="btn btn-primary align-self-start">Back to dashboard</a></div>
+{% endblock %}

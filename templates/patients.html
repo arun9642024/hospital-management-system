@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block title %}Patients · Hospital Analytics{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3"><div><h1 class="h2">Synthetic patients</h1><p class="text-secondary mb-0">Only non-identifying age bands and optional gender values are stored.</p></div><a class="btn btn-primary" href="{{ url_for('add_patient') }}">Add patient</a></div>
+<div class="card"><div class="table-responsive"><table class="table table-hover mb-0"><thead><tr><th>Patient ID</th><th>Age band</th><th>Gender (optional)</th></tr></thead><tbody>{% for r in records %}<tr><td>P{{ "%04d"|format(r.patient_id) }}</td><td>{{ r.age_band }}</td><td>{{ r.gender_optional or "Not provided" }}</td></tr>{% else %}<tr><td colspan="3">No records found.</td></tr>{% endfor %}</tbody></table></div></div>
+{% endblock %}

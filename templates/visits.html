@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block title %}Visits · Hospital Analytics{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3"><div><h1 class="h2">Visit records</h1><p class="text-secondary mb-0">Showing up to 500 most recent synthetic records.</p></div><a class="btn btn-primary" href="{{ url_for('add_visit') }}">Add visit</a></div>
+<div class="card"><div class="table-responsive"><table class="table table-hover mb-0"><thead><tr><th>Visit ID</th><th>Patient ID</th><th>Department</th><th>Date</th><th>Visit type</th></tr></thead><tbody>{% for r in records %}<tr><td>{{ r.visit_id }}</td><td>P{{ "%04d"|format(r.patient_id) }}</td><td>{{ r.department_name }}</td><td>{{ r.visit_date }}</td><td>{{ r.visit_type }}</td></tr>{% else %}<tr><td colspan="5">No visit records found.</td></tr>{% endfor %}</tbody></table></div></div>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Dashboard · Hospital Analytics{% endblock %}
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+  <div><h1 class="h2 mb-1">Operations dashboard</h1><p class="text-secondary mb-0">Aggregated visit volumes and workload</p></div>
+  <a class="btn btn-outline-primary" href="{{ url_for('export_csv', start_date=start_date, end_date=end_date) }}">Export aggregate CSV</a>
+</div>
+<form class="card card-body mb-4" method="get">
+  <div class="row g-3 align-items-end">
+    <div class="col-sm-5"><label class="form-label" for="start_date">Start date</label><input class="form-control" type="date" id="start_date" name="start_date" value="{{ start_date }}"></div>
+    <div class="col-sm-5"><label class="form-label" for="end_date">End date</label><input class="form-control" type="date" id="end_date" name="end_date" value="{{ end_date }}"></div>
+    <div class="col-sm-2 d-grid"><button class="btn btn-primary">Apply</button></div>
+  </div>
+</form>
+{% if has_data %}
+<div class="row g-3 mb-4">
+  <div class="col-md-3"><div class="metric-card"><span>Total visits</span><strong>{{ stats.total_visits }}</strong></div></div>
+  <div class="col-md-3"><div class="metric-card"><span>Departments</span><strong>{{ stats.departments }}</strong></div></div>
+  <div class="col-md-3"><div class="metric-card"><span>Unique synthetic patients</span><strong>{{ stats.unique_patients }}</strong></div></div>
+  <div class="col-md-3"><div class="metric-card"><span>Average visits/day</span><strong>{{ stats.avg_visits_per_day }}</strong></div></div>
+</div>
+<div class="row g-3 mb-4">
+  <div class="col-lg-6"><div class="card h-100"><div class="card-body"><h2 class="h5">Department workload</h2><img class="chart-img" src="data:image/png;base64,{{ analytics.charts.department }}" alt="Visits by department chart"></div></div></div>
+  <div class="col-lg-6"><div class="card h-100"><div class="card-body"><h2 class="h5">Monthly visit trend</h2><img class="chart-img" src="data:image/png;base64,{{ analytics.charts.monthly }}" alt="Monthly visit trend chart"></div></div></div>
+  <div class="col-lg-6"><div class="card h-100"><div class="card-body"><h2 class="h5">Age-band summary</h2><img class="chart-img" src="data:image/png;base64,{{ analytics.charts.age }}" alt="Visits by age band chart"></div></div></div>
+  <div class="col-lg-6"><div class="card h-100"><div class="card-body"><h2 class="h5">Daily summary statistics</h2><dl class="row mb-0">
+    <dt class="col-7">Peak visit date</dt><dd class="col-5">{{ stats.peak_day }}</dd>
+    <dt class="col-7">Visits on peak date</dt><dd class="col-5">{{ stats.peak_day_visits }}</dd>
+    <dt class="col-7">Mean daily visits (NumPy)</dt><dd class="col-5">{{ stats.numpy_mean }}</dd>
+    <dt class="col-7">Daily visits standard deviation</dt><dd class="col-5">{{ stats.numpy_std }}</dd>
+  </dl><p class="text-secondary small mt-3">These figures describe operations only and do not indicate clinical outcomes.</p></div></div></div>
+</div>
+<div class="row g-3">
+  <div class="col-lg-4"><div class="card"><div class="card-body"><h2 class="h5">Department totals</h2><div class="table-responsive"><table class="table table-sm"><thead><tr><th>Department</th><th class="text-end">Visits</th></tr></thead><tbody>{% for name, count in analytics.tables.department %}<tr><td>{{ name }}</td><td class="text-end">{{ count }}</td></tr>{% endfor %}</tbody></table></div></div></div></div>
+  <div class="col-lg-4"><div class="card"><div class="card-body"><h2 class="h5">Monthly totals</h2><div class="table-responsive"><table class="table table-sm"><thead><tr><th>Month</th><th class="text-end">Visits</th></tr></thead><tbody>{% for name, count in analytics.tables.monthly %}<tr><td>{{ name }}</td><td class="text-end">{{ count }}</td></tr>{% endfor %}</tbody></table></div></div></div></div>
+  <div class="col-lg-4"><div class="card"><div class="card-body"><h2 class="h5">Age-band totals</h2><div class="table-responsive"><table class="table table-sm"><thead><tr><th>Age band</th><th class="text-end">Visits</th></tr></thead><tbody>{% for name, count in analytics.tables.age %}<tr><td>{{ name }}</td><td class="text-end">{{ count }}</td></tr>{% endfor %}</tbody></table></div></div></div></div>
+</div>
+{% else %}
+<div class="card card-body"><h2 class="h5">No visits found</h2><p class="mb-0">Try a different date range or add synthetic visit records.</p></div>
+{% endif %}
+{% endblock %}
